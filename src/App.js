@@ -7,13 +7,22 @@ import * as BooksAPI from './BooksAPI';
 
 class BooksApp extends Component {
   state = {
-    books: []
+    books: [],
+    searchedBooks: [],
   }
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
     });
   }
+
+  searchBook = (query) => {
+    BooksAPI.search(query).then((books) => {
+      const searchedBooks = Array.isArray(books) ? books : [];
+      this.setState({ searchedBooks });
+    });
+  }
+
 
   render() {
     return (
@@ -24,7 +33,10 @@ class BooksApp extends Component {
           />
         )}/>
         <Route path='/search' render={() => (
-          <SearchBooks/>
+          <SearchBooks
+            books={this.state.searchedBooks}
+            onSearch={this.searchBook}
+          />
         )}/>
       </div>
     )
