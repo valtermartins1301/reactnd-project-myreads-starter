@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
-//import * as BooksAPI from './BooksAPI';
 import './App.css';
+import * as BooksAPI from './BooksAPI';
 
 class BooksApp extends Component {
   state = {
     books: []
   }
-
-  onChangeSearch(value) {
-    this.setState({ showSearchPage: value });
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books });
+    });
   }
 
   render() {
