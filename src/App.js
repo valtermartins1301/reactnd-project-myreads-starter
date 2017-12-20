@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
 //import * as BooksAPI from './BooksAPI';
@@ -6,7 +7,7 @@ import './App.css';
 
 class BooksApp extends Component {
   state = {
-    showSearchPage: false,
+    books: []
   }
 
   onChangeSearch(value) {
@@ -16,11 +17,14 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchBooks onChangeSearch={(value) => this.onChangeSearch(value)}/>
-        ) : (
-          <ListBooks onChangeSearch={(value) => this.onChangeSearch(value)}/>
-        )}
+        <Route exact path='/' render={() => (
+          <ListBooks
+            books={this.state.books}
+          />
+        )}/>
+        <Route path='/search' render={() => (
+          <SearchBooks/>
+        )}/>
       </div>
     )
   }
