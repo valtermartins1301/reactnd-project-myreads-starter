@@ -4,7 +4,7 @@ import { DebounceInput } from 'react-debounce-input';
 import BooksGrid from './BooksGrid';
 import Progress from './Progress';
 
-function NotFound() {
+function NoResults() {
   return (
     <p className="search-books-no-results">
       Nenhum livro encontrado...
@@ -22,7 +22,7 @@ function SearchResult({ books, changeShelf }) {
     );
   }
 
-  return <NotFound />;
+  return <NoResults />;
 }
 
 function SearchBooks({
@@ -34,8 +34,8 @@ function SearchBooks({
         <Link className="close-search" to="/">Close</Link>
         <DebounceInput
           minLength={2}
-          debounceTimeout={300}
-          placeholder="Search by title or author"
+          debounceTimeout={400}
+          placeholder="Type here to search by title or author"
           onChange={event => onSearch(event.target.value)}
         />
         {isLoading &&
