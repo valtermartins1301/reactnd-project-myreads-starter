@@ -2,24 +2,39 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
-import './App.css';
 import * as BooksAPI from './BooksAPI';
+import './App.css';
 
 class BooksApp extends Component {
   state = {
     books: [],
+    currentlyReading: [],
+    read: [],
+    wantToRead: [],
     searchedBooks: [],
   }
+
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books });
+      const currentlyReading = books.filter(book => book.shelf === 'currentlyReading');
+      const wantToRead = books.filter(book => book.shelf === 'wantToRead');
+      const read = books.filter(book => book.shelf === 'read');
+
+      this.setState({
+        currentlyReading,
+        wantToRead,
+        read,
+        books,
+      });
     });
   }
 
-  searchBook = (query) => {
-    BooksAPI.search(query).then((books) => {
-      const searchedBooks = Array.isArray(books) ? books : [];
-      this.setState({ searchedBooks });
+  searchBook = async (query) => {
+    const { books } = this.state;
+    const searchedBooks = await BooksAPI.search(query) || [];
+
+    this.setState({
+      searchedBooks,
     });
   }
 
