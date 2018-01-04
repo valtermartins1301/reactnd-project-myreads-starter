@@ -59,20 +59,31 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={() => (
-          <ListBooks
-            books={this.state.books}
-          />
-        )}/>
-        <Route path='/search' render={() => (
-          <SearchBooks
-            books={this.state.searchedBooks}
-            onSearch={this.searchBook}
-          />
-        )}/>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <ListBooks
+              currentlyReading={this.state.currentlyReading}
+              wantToRead={this.state.wantToRead}
+              read={this.state.read}
+              onUpdate={this.updateBook}
+            />
+          )}
+        />
+        <Route
+          path="/search"
+          render={() => (
+            <SearchBooks
+              books={this.state.searchedBooks}
+              onSearch={this.searchBook}
+              onUpdate={this.updateBook}
+            />
+          )}
+        />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;
