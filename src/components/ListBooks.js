@@ -9,8 +9,8 @@ function ListBooks({
   return (
     <div className="list-books">
       {isLoading &&
-      <Progress />
-    }
+        <Progress />
+      }
       <div className="list-books-title">
         <h1>MyReads</h1>
       </div>
