@@ -1,6 +1,10 @@
 import React from 'react';
 import SelfChanger from './SelfChanger';
 
+function getAuthors(book) {
+  return book.authors.toString();
+}
+
 function Book({ book, changeShelf }) {
   return (
     <div className="book">
@@ -11,7 +15,7 @@ function Book({ book, changeShelf }) {
         </div>
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{() => book.authors.toString()}</div>
+      <div className="book-authors">{getAuthors(book)}</div>
     </div>
   );
 }
