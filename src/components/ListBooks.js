@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Bookshelf from './Bookshelf';
+import Progress from './Progress';
 
 function ListBooks({
   currentlyReading, wantToRead, read, onUpdate, isLoading,
 }) {
   return (
     <div className="list-books">
+      {isLoading &&
+      <Progress />
+    }
       <div className="list-books-title">
         <h1>MyReads</h1>
       </div>

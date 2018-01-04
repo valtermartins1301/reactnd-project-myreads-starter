@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import BooksGrid from './BooksGrid';
+import Progress from './Progress';
 
 function NotFound() {
   return (
@@ -31,14 +32,15 @@ function SearchBooks({
     <div className="search-books">
       <div className="search-books-bar">
         <Link className="close-search" to="/">Close</Link>
-        <div className="search-books-input-wrapper">
-          <DebounceInput
-            minLength={2}
-            debounceTimeout={300}
-            placeholder="Search by title or author"
-            onChange={event => onSearch(event.target.value)}
-          />
-        </div>
+        <DebounceInput
+          minLength={2}
+          debounceTimeout={300}
+          placeholder="Search by title or author"
+          onChange={event => onSearch(event.target.value)}
+        />
+        {isLoading &&
+          <Progress />
+        }
       </div>
       <div className="search-books-results">
         <SearchResult
