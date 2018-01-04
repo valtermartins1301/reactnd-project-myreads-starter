@@ -24,7 +24,9 @@ function SearchResult({ books, changeShelf }) {
   return <NotFound />;
 }
 
-function SearchBooks({ books, onSearch, onUpdate }) {
+function SearchBooks({
+  books, onSearch, onUpdate, isLoading,
+}) {
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -52,6 +54,7 @@ SearchBooks.defaultProps = {
   books: [],
   onSearch: () => {},
   onUpdate: () => {},
+  isLoading: false,
 };
 
 export default SearchBooks;

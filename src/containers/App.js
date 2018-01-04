@@ -13,6 +13,7 @@ class BooksApp extends Component {
     read: [],
     wantToRead: [],
     searchedBooks: [],
+    isLoading: false,
   }
 
   componentDidMount() {
@@ -31,22 +32,26 @@ class BooksApp extends Component {
   }
 
   searchBook = async (query) => {
+    this.setState({ isLoading: true });
     const { books } = this.state;
     const searchedBooks = await BooksAPI.search(query) || [];
 
     this.setState({
       searchedBooks,
       books: union(books, searchedBooks),
+      isLoading: false,
     });
   }
 
   updateBook = async (book, shelf) => {
+    this.setState({ isLoading: true });
     const { currentlyReading, wantToRead, read } = await BooksAPI.update(book, shelf);
 
     this.setState({
       currentlyReading: currentlyReading.map(this.findBook),
       wantToRead: wantToRead.map(this.findBook),
       read: read.map(this.findBook),
+      isLoading: false,
     });
   }
 
@@ -68,6 +73,7 @@ class BooksApp extends Component {
               wantToRead={this.state.wantToRead}
               read={this.state.read}
               onUpdate={this.updateBook}
+              isLoading={this.state.isLoading}
             />
           )}
         />
@@ -78,6 +84,7 @@ class BooksApp extends Component {
               books={this.state.searchedBooks}
               onSearch={this.searchBook}
               onUpdate={this.updateBook}
+              isLoading={this.state.isLoading}
             />
           )}
         />

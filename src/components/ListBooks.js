@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Bookshelf from './Bookshelf';
 
 function ListBooks({
-  currentlyReading, wantToRead, read, onUpdate,
+  currentlyReading, wantToRead, read, onUpdate, isLoading,
 }) {
   return (
     <div className="list-books">
@@ -39,6 +39,7 @@ ListBooks.defaultProps = {
   wantToRead: [],
   read: [],
   onUpdate: () => {},
+  isLoading: false,
 };
 
 export default ListBooks;
