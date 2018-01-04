@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { union } from 'lodash';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
 import * as BooksAPI from './BooksAPI';
@@ -35,6 +36,7 @@ class BooksApp extends Component {
 
     this.setState({
       searchedBooks,
+      books: union(books, searchedBooks),
     });
   }
 
