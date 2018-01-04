@@ -40,6 +40,21 @@ class BooksApp extends Component {
     });
   }
 
+  updateBook = async (book, shelf) => {
+    const { currentlyReading, wantToRead, read } = await BooksAPI.update(book, shelf);
+
+    this.setState({
+      currentlyReading: currentlyReading.map(this.findBook),
+      wantToRead: wantToRead.map(this.findBook),
+      read: read.map(this.findBook),
+    });
+  }
+
+  findBook = (id) => {
+    const { books } = this.state;
+
+    return books.find(book => book.id === id);
+  }
 
   render() {
     return (
