@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SelfChanger extends Component {
+class ShelfChanger extends Component {
   state = {
     shelf: 'none',
   }
@@ -28,9 +28,9 @@ class SelfChanger extends Component {
   }
 }
 
-SelfChanger.defaultProps = {
+ShelfChanger.defaultProps = {
   book: {},
   changeShelf: () => {},
 };
 
-export default SelfChanger;
+export default ShelfChanger;
