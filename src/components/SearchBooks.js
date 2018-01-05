@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import BooksGrid from './BooksGrid';
@@ -25,45 +25,31 @@ function SearchResult({ books, changeShelf }) {
   return <NoResults />;
 }
 
-class SearchBooks extends Component {
-  state = {
-    books: this.props.books,
-  }
-
-  componentDidMount = () => {
-    this.setState({ books: [] });
-  }
-
-  componentWillReceiveProps = ({ books }) => {
-    this.setState({ books });
-  }
-
-  render() {
-    const { onSearch, onUpdate, isLoading } = this.props;
-
-    return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link className="close-search" to="/">Close</Link>
-          <DebounceInput
-            minLength={2}
-            debounceTimeout={400}
-            placeholder="Type here to search by title or author"
-            onChange={event => onSearch(event.target.value)}
-          />
-          {isLoading &&
-            <Progress />
-          }
-        </div>
-        <div className="search-books-results">
-          <SearchResult
-            books={this.state.books}
-            changeShelf={onUpdate}
-          />
-        </div>
+function SearchBooks({
+  books, onSearch, onUpdate, isLoading,
+}) {
+  return (
+    <div className="search-books">
+      <div className="search-books-bar">
+        <Link className="close-search" to="/">Close</Link>
+        <DebounceInput
+          minLength={2}
+          debounceTimeout={400}
+          placeholder="Type here to search by title or author"
+          onChange={event => onSearch(event.target.value)}
+        />
+        {isLoading &&
+          <Progress />
+        }
       </div>
-    );
-  }
+      <div className="search-books-results">
+        <SearchResult
+          books={books}
+          changeShelf={onUpdate}
+        />
+      </div>
+    </div>
+  );
 }
 
 SearchBooks.defaultProps = {
