@@ -33,11 +33,21 @@ class BooksApp extends Component {
 
   searchBook = async (query) => {
     this.setState({ isLoading: true });
-    const { books } = this.state;
-    const searchedBooks = await BooksAPI.search(query) || [];
+
+    const result = query ? await BooksAPI.search(query) : [];
+    const searchedBooks = result.items || result;
+    const {
+      currentlyReading, wantToRead, read, books,
+    } = this.state;
+    const bookShelfs = [
+      ...currentlyReading,
+      ...wantToRead,
+      ...read,
+    ];
+    const findOnBookShelf = searchedBook => bookShelfs.find(book => book.id === searchedBook.id);
 
     this.setState({
-      searchedBooks,
+      searchedBooks: searchedBooks.map(book => findOnBookShelf(book) || book),
       books: union(books, searchedBooks),
       isLoading: false,
     });
@@ -45,12 +55,17 @@ class BooksApp extends Component {
 
   updateBook = async (book, shelf) => {
     this.setState({ isLoading: true });
+    const { books } = this.state;
     const { currentlyReading, wantToRead, read } = await BooksAPI.update(book, shelf);
+    const currentlyReadingBooks = currentlyReading.map(this.findBook);
+    const wantToReadBooks = wantToRead.map(this.findBook);
+    const readBooks = read.map(this.findBook);
 
     this.setState({
-      currentlyReading: currentlyReading.map(this.findBook),
-      wantToRead: wantToRead.map(this.findBook),
-      read: read.map(this.findBook),
+      currentlyReading: currentlyReadingBooks,
+      wantToRead: wantToReadBooks,
+      read: readBooks,
+      books: union(currentlyReadingBooks, wantToReadBooks, readBooks, books),
       isLoading: false,
     });
   }
